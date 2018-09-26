@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Vehículo Autónomo</string>
+    <string name="title_engine">Start/Engine</string>
+    <string name="title_rutas">Ruta</string>
+    <string name="title_dashboard">Estadísticas</string>
+    <string name="title_camera">Cámara</string>
+    <string name="des_iv_btn_start">Boton Start</string>
+</resources>
