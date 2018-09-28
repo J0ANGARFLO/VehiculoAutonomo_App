@@ -22,7 +22,7 @@
     <ImageView
         android:id="@+id/ivBtnStart"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:contentDescription="@string/des_iv_btn_start"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,5 +30,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/btn_start_512" />
+
+    <ImageView
+        android:id="@+id/ivBtnStop"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:contentDescription="@string/des_iv_btn_stop"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/btn_stop_512" />
 
 </android.support.constraint.ConstraintLayout>

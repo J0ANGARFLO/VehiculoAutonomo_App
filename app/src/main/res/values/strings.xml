@@ -5,4 +5,5 @@
     <string name="title_dashboard">Estadísticas</string>
     <string name="title_camera">Cámara</string>
     <string name="des_iv_btn_start">Boton Start</string>
+    <string name="des_iv_btn_stop">Boton Stop</string>
 </resources>
