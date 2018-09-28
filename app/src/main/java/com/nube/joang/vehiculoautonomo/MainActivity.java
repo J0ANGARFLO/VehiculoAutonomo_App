@@ -1,6 +1,5 @@
 package com.nube.joang.vehiculoautonomo;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -23,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private ImageView ivBtnStart;
     private ImageView ivBtnStop;
+    private Retrofit retrofit;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -64,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
         ivBtnStart = (ImageView) findViewById(R.id.ivBtnStart);
         ivBtnStop = (ImageView) findViewById(R.id.ivBtnStop);
 
+        retrofit = new Retrofit.Builder()
+                .baseUrl(ConstantesRestApi.ROOT_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         ivBtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,39 +83,29 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Deteniendo Carro RC", Toast.LENGTH_SHORT).show();
 
-                getStartEngineREST();
+                getStopEngineREST();
             }
         });
     }
 
     private void getStartEngineREST() {
-        Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(ConstantesRestApi.ROOT_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+        StartEngineService service = retrofit.create(StartEngineService.class);
 
-        GreetingService service = retrofit.create(GreetingService.class);
-
-        Call<Greeting> call = service.getGreeting("true");
-        call.enqueue(new Callback<Greeting>() {
+        Call<mapperAttributes> call = service.getStartEngine();
+        call.enqueue(new Callback<mapperAttributes>() {
             @Override
-            public void onResponse(Call<Greeting> call, Response<Greeting> response) {
-                Greeting greeting = response.body();
-                Log.d("Response", greeting.getMessage());
-                Toast.makeText(MainActivity.this, greeting.getMessage(), Toast.LENGTH_LONG).show();
+            public void onResponse(Call<mapperAttributes> call, Response<mapperAttributes> response) {
+                mapperAttributes mapperAttributes = response.body();
+                Log.d("Response", mapperAttributes.getMessage());
+                Toast.makeText(MainActivity.this, mapperAttributes.getMessage(), Toast.LENGTH_LONG).show();
 
                 // Cambio de imagenes
-                if (ivBtnStart.getVisibility() == View.VISIBLE) {
-                    ivBtnStart.setVisibility(View.INVISIBLE);
-                    ivBtnStop.setVisibility(View.VISIBLE);
-                } else {
-                    ivBtnStart.setVisibility(View.VISIBLE);
-                    ivBtnStop.setVisibility(View.INVISIBLE);
-                }
+                ivBtnStart.setVisibility(View.INVISIBLE);
+                ivBtnStop.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public void onFailure(Call<Greeting> call, Throwable t) {
+            public void onFailure(Call<mapperAttributes> call, Throwable t) {
                 Log.e("Error", t.getMessage());
                 Toast.makeText(MainActivity.this, "Ha ocurrido un error al llamar al servicio", Toast.LENGTH_LONG).show();
             }
@@ -118,33 +113,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getStopEngineREST() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ConstantesRestApi.ROOT_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        StopEngineService service = retrofit.create(StopEngineService.class);
 
-        GreetingService service = retrofit.create(GreetingService.class);
-
-        Call<Greeting> call = service.getGreeting("true");
-        call.enqueue(new Callback<Greeting>() {
+        Call<mapperAttributes> call = service.getStopEngine();
+        call.enqueue(new Callback<mapperAttributes>() {
             @Override
-            public void onResponse(Call<Greeting> call, Response<Greeting> response) {
-                Greeting greeting = response.body();
-                Log.d("Response", greeting.getMessage());
-                Toast.makeText(MainActivity.this, greeting.getMessage(), Toast.LENGTH_LONG).show();
+            public void onResponse(Call<mapperAttributes> call, Response<mapperAttributes> response) {
+                mapperAttributes mapperAttributes = response.body();
+                Log.d("Response", mapperAttributes.getMessage());
+                Toast.makeText(MainActivity.this, mapperAttributes.getMessage(), Toast.LENGTH_LONG).show();
 
                 // Cambio de imagenes
-                if (ivBtnStart.getVisibility() == View.VISIBLE) {
-                    ivBtnStart.setVisibility(View.INVISIBLE);
-                    ivBtnStop.setVisibility(View.VISIBLE);
-                } else {
-                    ivBtnStart.setVisibility(View.VISIBLE);
-                    ivBtnStop.setVisibility(View.INVISIBLE);
-                }
+                ivBtnStart.setVisibility(View.VISIBLE);
+                ivBtnStop.setVisibility(View.INVISIBLE);
             }
 
             @Override
-            public void onFailure(Call<Greeting> call, Throwable t) {
+            public void onFailure(Call<mapperAttributes> call, Throwable t) {
                 Log.e("Error", t.getMessage());
                 Toast.makeText(MainActivity.this, "Ha ocurrido un error al llamar al servicio", Toast.LENGTH_LONG).show();
             }

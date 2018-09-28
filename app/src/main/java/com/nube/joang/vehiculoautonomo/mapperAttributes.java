@@ -1,6 +1,6 @@
 package com.nube.joang.vehiculoautonomo;
 
-public class Greeting {
+public class mapperAttributes {
     private String state;
     private String message;
 
